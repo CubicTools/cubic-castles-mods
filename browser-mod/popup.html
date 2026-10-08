@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CC Browser Mods</title>
+  <style>
+    :root { color-scheme: dark; font: 12px/1.35 "Segoe UI", Arial, sans-serif; }
+    * { box-sizing: border-box; }
+    body { width: 338px; margin: 0; color: #e8edf4; background: #11151c; }
+    header { padding: 14px 15px 11px; border-bottom: 1px solid #29313d;
+      background: linear-gradient(135deg, #182437, #141922 62%); }
+    h1 { margin: 0; color: #82bdff; font-size: 14px; letter-spacing: .06em; }
+    .tagline { margin-top: 3px; color: #8792a1; font-size: 10px; }
+    main { padding: 11px 12px 12px; }
+    button { font: inherit; }
+    .primary { width: 100%; border: 1px solid #4f8ed9; border-radius: 7px; padding: 8px;
+      color: white; background: #2463aa; font-weight: 750; cursor: pointer; }
+    .primary:hover { background: #2e75c7; }
+    #status { min-height: 17px; margin: 5px 2px 2px; color: #8994a3; font-size: 10px; text-align: center; }
+    #status[data-tone="good"] { color: #7ee787; }
+    #status[data-tone="bad"] { color: #ff9b91; }
+    section { margin-top: 9px; padding-top: 9px; border-top: 1px solid #29313d; }
+    h2 { margin: 0 0 6px; color: #aab5c4; font-size: 10px; letter-spacing: .09em; text-transform: uppercase; }
+    .toggle { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      min-height: 28px; color: #d5dbe4; }
+    .toggle input { width: 16px; height: 16px; margin: 0; accent-color: #4285d4; }
+    .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+    .mode { border: 1px solid #333d4c; border-radius: 6px; padding: 6px 3px; color: #b8c1ce;
+      background: #1b212b; cursor: pointer; }
+    .mode.active { border-color: #66a6f2; color: white; background: #2867ad; }
+    .slider { display: grid; grid-template-columns: 72px 1fr 41px; gap: 7px; align-items: center;
+      margin-top: 8px; color: #aeb7c4; font-size: 11px; }
+    .slider input { width: 100%; accent-color: #4285d4; }
+    .number { color: #bdddff; font-family: Consolas, monospace; text-align: right; }
+    .bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .quiet { border: 1px solid #333d4c; border-radius: 6px; padding: 6px 9px; color: #b8c1ce;
+      background: #1b212b; cursor: pointer; }
+    .hint { color: #788391; font-size: 10px; }
+    .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+    .chip { display: flex; align-items: center; gap: 6px; min-height: 27px; padding: 4px 7px;
+      border: 1px solid #2c3542; border-radius: 6px; color: #c9d1dc; background: #171c25;
+      font-size: 11px; cursor: pointer; user-select: none; }
+    .chip:hover { border-color: #3f5b80; }
+    .chip input { width: 13px; height: 13px; margin: 0; flex: none; accent-color: #4285d4; }
+    .chip:has(input:checked) { border-color: #3f6fa8; color: white; background: #1b2c44; }
+    .search { width: 100%; margin-top: 7px; padding: 7px 8px; border: 1px solid #333d4c; border-radius: 6px;
+      outline: 0; color: #e8edf4; background: #0c1016; font: inherit; }
+    .search:focus { border-color: #4f8ed9; }
+    .matches { max-height: 130px; overflow: auto; }
+    .match { display: block; width: 100%; border: 0; padding: 5px 7px; text-align: left; color: #d7dde7;
+      background: transparent; cursor: pointer; }
+    .match:hover { background: #263852; color: white; }
+    .pills { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+    .pill { border: 0; border-radius: 999px; padding: 3px 8px; color: #dbeafe; background: #263852;
+      font-size: 11px; cursor: pointer; }
+    .pill:hover { background: #63323a; color: #fecaca; }
+    .finder-summary { margin-top: 7px; }
+    .results { max-height: 190px; overflow: auto; margin-top: 4px; }
+    .result { padding: 5px 2px; border-top: 1px solid #222a35; }
+    .result-name { color: #f2d57a; font-weight: 700; font-size: 11px; }
+    .coords { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px; }
+    .coord { border: 1px solid #3a4d66; border-radius: 4px; padding: 1px 5px; color: #bfdbfe;
+      background: #172234; font: 10px Consolas, monospace; cursor: pointer; }
+    .coord:hover, .coord.active { border-color: #f2c14e; color: #fff3c4; background: #3a3016; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CUBIC CASTLES MODS</h1>
+    <div class="tagline">Compact controls for the open castles.cc tab</div>
+  </header>
+  <main>
+    <button id="openMarket" class="primary">Open Vending Market Search</button>
+    <div id="status">CC MODS or F7 also opens it in game.</div>
+
+    <section>
+      <h2>Display</h2>
+      <div class="chips">
+        <label class="chip"><input id="hudVisible" type="checkbox">HUD</label>
+        <label class="chip"><input id="loadingScreen" type="checkbox">Loading art</label>
+        <label class="chip"><input id="vendPriceCard" type="checkbox">Price card</label>
+        <label class="chip" title="Name tags over players' heads. Turn off to hide every name"><input id="playerNames" type="checkbox">Names</label>
+        <label class="chip" title="Foggy and Bottomless Foggy realms draw clear: full view distance, no grey haze or grain"><input id="noFog" type="checkbox">No fog</label>
+        <label class="chip" title="Escape → Friends opens the new friends list (F4 opens it too)"><input id="friendsPanel" type="checkbox">Friends list</label>
+        <label class="chip" title="Escape → Profile opens the new profile window (F2 opens it too)"><input id="profilePanel" type="checkbox">Profile</label>
+        <label class="chip" title="Escape → Cubit Store opens the new store (buys go through the game's own steps)"><input id="storePanel" type="checkbox">Store</label>
+        <label class="chip" title="Escape → Perks (or F3) opens the new perks window (picks spend your yellow / green stars the game's way)"><input id="perksPanel" type="checkbox">Perks</label>
+        <label class="chip" title="Refreshes the Escape-menu buttons in their familiar radial layout; every click still uses the game's own action"><input id="menuPanel" type="checkbox">Menu buttons</label>
+        <label class="chip" title="Commands in the game's chat: /ban /unban /trust /untrust &lt;player&gt;, /pvp, /names, /nofog, /bright, /search &lt;item&gt;, /w &lt;name&gt; &lt;message&gt;, /r &lt;message&gt;. Names are suggested; Tab fills them in"><input id="chatCommands" type="checkbox">Chat commands</label>
+      </div>
+      <label class="slider"><span>HUD opacity</span><input id="opacity" type="range" min="0.45" max="1" step="0.01"><span id="opacityValue" class="number"></span></label>
+    </section>
+
+    <section>
+      <h2>Block Finder</h2>
+      <div class="chips">
+        <label class="chip"><input id="finderFossils" type="checkbox">Find fossils</label>
+        <label class="chip"><input id="finderGlow" type="checkbox">Gold glow</label>
+      </div>
+      <input id="finderSearch" class="search" placeholder="Add a block to find (name or #id)" autocomplete="off">
+      <div id="finderMatches" class="matches"></div>
+      <div id="finderSelected" class="pills"></div>
+      <div id="finderSummary" class="hint finder-summary">Open castles.cc to see results.</div>
+      <div id="finderResults" class="results"></div>
+    </section>
+
+    <section id="plotSection">
+      <h2>Keep my plot · re-buyer</h2>
+      <label class="toggle" style="margin-bottom:7px"><span>Show the Keep my plot panel in game</span><input id="plotOverlay" type="checkbox"></label>
+      <div id="plotHint" class="hint" style="color:#fbbf77"></div>
+      <div class="hint">In the game panel, type your bumper's bx / by / bz and press <b>Keep this plot</b>. With 5 minutes left on your rent it hits the bumper once (you don't move) and buys it again, then checks the time went up. Keeps going while this tab is in that realm.</div>
+    </section>
+
+    <section>
+      <h2>Multi-block planner · F10</h2>
+      <label class="toggle"><span>Enable multi-block mode + preview</span><input id="multiPreview" type="checkbox"></label>
+      <div class="modes">
+        <button class="mode" data-multi-action="break">Break</button>
+        <button class="mode" data-multi-action="build">Build</button>
+      </div>
+      <div class="modes" style="margin-top:5px">
+        <button class="mode" data-multi-mode="forward">Forward</button>
+        <button class="mode" data-multi-mode="down">Down</button>
+        <button class="mode" data-multi-mode="group">3×3</button>
+      </div>
+      <label class="slider"><span>Blocks</span><input id="multiCount" type="range" min="2" max="9" step="1"><span id="multiCountValue" class="number"></span></label>
+      <div class="hint" style="margin-top:7px">Turn preview on, choose Break or Build (F8 in-game), then do one normal matching break/build. Hold left click to see the glowing preview; the pattern follows the way you're looking.</div>
+    </section>
+
+    <section>
+      <h2>Realm lighting · Shift+F3</h2>
+      <div class="modes">
+        <button class="mode" data-lighting-mode="0">Original</button>
+        <button class="mode" data-lighting-mode="1">Bright</button>
+        <button class="mode" data-lighting-mode="2">Full bright</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Camera · F5 cycles modes</h2>
+      <div class="modes">
+        <button class="mode" data-camera-mode="0">Native</button>
+        <button class="mode" data-camera-mode="1">First</button>
+        <button class="mode" data-camera-mode="2">Near third</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Updates</h2>
+      <div id="updateInfo" class="hint">Checking the home update server…</div>
+      <button id="updateNow" class="mode" style="width:100%;margin-top:6px">Check for updates</button>
+      <button id="allowUserScripts" class="mode" style="width:100%;margin-top:6px" hidden>Open extension settings</button>
+    </section>
+
+    <section class="bottom">
+      <span class="hint">Changes apply immediately.</span>
+      <button id="reset" class="quiet">Reset</button>
+    </section>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

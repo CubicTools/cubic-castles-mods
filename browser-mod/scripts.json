@@ -1,0 +1,16 @@
+[
+  "cc-browser-wasm-friends.js",
+  "cc-browser-perf.js",
+  "cc-browser-core.js",
+  "cc-browser-friends.js",
+  "cc-browser-profile.js",
+  "cc-browser-store.js",
+  "cc-browser-perks.js",
+  "cc-browser-menu.js",
+  "cc-browser-camera.js",
+  "cc-browser-lighting.js",
+  "cc-browser-vend.js",
+  "cc-browser-planner.js",
+  "cc-browser-qol.js",
+  "cc-browser-mod.js"
+]

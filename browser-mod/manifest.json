@@ -1,0 +1,62 @@
+{
+  "manifest_version": 3,
+  "name": "Cubic Castles Browser Mods",
+  "version": "1.0.30",
+  "description": "Cubic Castles HUD, full-bright realm lighting, custom friends list, multi-block planner, vending search, Realm Search, Finder, favorites, camera controls, and performance tuning.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "alarms",
+    "scripting",
+    "userScripts"
+  ],
+  "host_permissions": [
+    "https://castles.cc/*",
+    "https://*.castles.cc/*",
+    "https://cc.rootsservers.com/*",
+    "https://www.cubiccastles.com/store2/*",
+    "https://ccupdates.rootsservers.com/*",
+    "http://ccupdates.rootsservers.com/*"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Cubic Castles Browser Mods",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://castles.cc/*",
+        "https://*.castles.cc/*"
+      ],
+      "js": [
+        "bridge.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "splash/*.png",
+        "menu-icons/*.png"
+      ],
+      "matches": [
+        "https://castles.cc/*",
+        "https://*.castles.cc/*"
+      ]
+    }
+  ]
+}
