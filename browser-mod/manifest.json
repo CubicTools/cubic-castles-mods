@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Cubic Castles Browser Mods",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "description": "Cubic Castles HUD, full-bright realm lighting, custom friends list, multi-block planner, vending search, Realm Search, Finder, favorites, camera controls, and performance tuning.",
   "permissions": [
     "storage",

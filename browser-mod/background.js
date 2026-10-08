@@ -66,8 +66,8 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 
 /* ---------------- feature scripts + self-update ----------------
  * The game-page (MAIN world) scripts aren't listed in the manifest; this
- * worker registers them, so it can swap in a newer copy from the home update
- * server (Pi-hole -> the Linux box, LAN only) without touching the extension's
+ * worker registers them, so it can swap in a newer copy from the update
+ * server (ccupdates.rootsservers.com, the VPS) without touching the extension's
  * folder, which Chrome never lets an extension rewrite.
  *  - "Allow User Scripts" on (chrome://extensions -> Details): they run through
  *    chrome.userScripts, from the newer of this folder's copy or a downloaded
@@ -210,7 +210,7 @@ async function checkForUpdateNow() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     latest = await response.json();
   } catch (_) {
-    return { ...status, ok: false, message: "Update server not reachable (home network only)." };
+    return { ...status, ok: false, message: "Couldn't reach the update server. Check your internet connection and try again." };
   }
   status.latest = latest.version;
   status.notes = latest.notes || "";

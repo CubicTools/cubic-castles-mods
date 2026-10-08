@@ -353,7 +353,7 @@
     }
     const button = byId("updateNow");
     button.disabled = true;
-    setUpdateInfo("Checking the home update server…");
+    setUpdateInfo("Checking for updates…");
     chrome.runtime.sendMessage({ type: "cc-update-check" }, info => {
       button.disabled = false;
       if (!info) return;
