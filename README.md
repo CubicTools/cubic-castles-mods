@@ -4,6 +4,14 @@ Downloads for **Cubic Mods** (the Windows exe for the Steam client) and the **Cu
 
 Get the files from the [Releases](../../releases) page.
 
+## Video tutorial
+
+How to install the browser extension and a tour of every feature:
+
+[![Cubic Castles Browser Mods – full tutorial](https://img.youtube.com/vi/whrnC4NFEPk/maxresdefault.jpg)](https://youtu.be/whrnC4NFEPk)
+
+▶️ https://youtu.be/whrnC4NFEPk
+
 ## Cubic Mods (exe)
 
 1. Download `cubic-mods-<version>.exe` from the latest release.
@@ -11,9 +19,15 @@ Get the files from the [Releases](../../releases) page.
 
 ## Browser extension
 
-1. Download `browser-mod-<version>.zip` from the latest release and unzip it into a folder.
-2. Open `chrome://extensions` (or `brave://extensions` / `edge://extensions`).
-3. Turn on **Developer mode**, click **Load unpacked**, and pick the unzipped folder.
-4. Open https://castles.cc and use the extension's popup.
+1. Download `browser-mod-<version>.zip` from the latest release.
+2. Right-click it → **Extract All** → **Extract**. Keep that folder somewhere permanent; the extension runs from it.
+3. Open `chrome://extensions` (or `brave://extensions` / `edge://extensions`) and turn on **Developer mode**.
+4. Click **Load unpacked** and pick the extracted folder.
+5. Click **Details** on the extension and turn on **Allow User Scripts** so it can update itself.
+6. Pin it, open https://castles.cc, and click the CC Mods icon.
 
 The extension source is also in the [`browser-mod`](browser-mod) folder of this repo.
+
+---
+
+Fan-made and unofficial: not made by or affiliated with the Cubic Castles developers. Use at your own risk.
