@@ -21,6 +21,8 @@ How to install the browser extension and a tour of every feature:
 5. Click **Details** on the extension and turn on **Allow User Scripts** so it can update itself.
 
 
+
+
 The extension source is also in the [`browser-mod`](browser-mod) folder of this repo.
 
 ---
